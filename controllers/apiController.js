@@ -7,7 +7,36 @@ module.exports = function(app) {
     app.use(bodyParser.urlencoded({
         extended : true
     }));
-    
+
+    /*
+
+    Request: 
+    GET: localhost:1337/api/todos/Kshitij
+
+    Response: 
+    [
+		{
+			"_id": "58df6ae56c6fd97877ab4109",
+			"username": "Kshitij",
+			"todo": "Make app",
+			"creation_time": "1491036780922",
+			"isDone": false,
+			"hasAttachment": false,
+			"__v": 0
+		},
+		{
+			"_id": "58df70d26c6fd97877ab410d",
+			"username": "Kshitij",
+			"todo": "Have ice cream",
+			"creation_time": "1491038418081",
+			"isDone": false,
+			"hasAttachment": false,
+			"__v": 0
+		}
+	]
+
+	*/
+
     app.get("/api/todos/:username", function(req, res) {
         
         Todos.find({
@@ -21,6 +50,24 @@ module.exports = function(app) {
             
     });
 
+    /*
+
+    Request: 
+    GET: localhost:1337/api/todo/58df210ce9af2932bf648e96
+
+    Response: 
+    {
+		"_id": "58df210ce9af2932bf648e96",
+		"username": "Kshitij",
+		"todo": "Make app",
+		"creation_time": "1491017946842",
+		"isDone": false,
+		"hasAttachment": false,
+		"__v": 0
+	}
+
+	*/
+
     app.get("/api/todo/:id", function(req, res) {
 
         Todos.findById({
@@ -33,6 +80,32 @@ module.exports = function(app) {
         });
 
     });
+
+	/*
+
+    Request: 
+    POST: localhost:1337/api/todo/
+
+    This will update the todo which will be already present in the DB.
+    {
+		"id": "58df6fbe6c6fd97877ab410b",
+		"todo": "LOLOLO",
+		"isDone": false,
+		"hasAttachment": false
+	}
+	
+	This will add todo to the DB.
+	{
+		"username": "Kshitij",
+		"todo": "Have cream",
+		"isDone": false,
+		"hasAttachment": false
+	}
+
+    Response: 
+    Success
+
+	*/    
 
     app.post("/api/todo", function(req, res) {
 
@@ -66,15 +139,29 @@ module.exports = function(app) {
 
     });
 
+    /*
+
+    Request: 
+    Delete: localhost:1337/api/todo/
+
+    {
+		"id": "58df70ea6c6fd97877ab410e"
+	}
+
+    Response: 
+    Success
+
+	*/
+
     app.delete("/api/todo", function(req, res){
             
-            Todos.findByIdAndRemove(req.body.id, function(err) {
-                if (err)
-                    throw err;
+        Todos.findByIdAndRemove(req.body.id, function(err) {
+       	    if (err)
+                throw err;
 
-                res.send("Success");
-            });
-
+            res.send("Success");
         });
+
+    });
 
 }
