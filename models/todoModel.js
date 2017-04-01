@@ -5,11 +5,11 @@ var Schema = mongoose.Schema;
 var todoSchema = new Schema({
     username: String,
     todo: String,
-    creation_date: String,
+    creation_time: String,
     isDone: Boolean,
     hasAttachment: Boolean
 })
 
-var Todos = mongoose.Model("Todos", todoSchema);
+var Todos = mongoose.model("Todos", todoSchema);
 
 module.exports = Todos;
